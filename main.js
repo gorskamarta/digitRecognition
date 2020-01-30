@@ -20,7 +20,7 @@ $( document ).ready(function() {
 
         ctx.beginPath(); // begin
 
-        ctx.lineWidth = 10;
+        ctx.lineWidth = 30;
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#000000';
 
@@ -45,10 +45,10 @@ $( document ).ready(function() {
 
         input = newPixelArray;
         output = [];
-        $inputSize=280;
+        inputSize=280;
         outputSize = 28;
         for (row = 0 ; row < outputSize; row++) {
-            for ($column = 0 ; $column < outputSize ; column++) {
+            for (column = 0 ; column < outputSize ; column++) {
 
                 val = 0;
                 for (inputRow = row*(inputSize/outputSize) ; inputRow < (row+1)*(inputSize/outputSize) ; inputRow++) {
@@ -56,16 +56,14 @@ $( document ).ready(function() {
                         val += input[inputColumn+(inputRow*inputSize)];
                     }
                 }
-                output[] = val/((inputSize/outputSize)*(inputSize/outputSize));
+                output[output.length] = (255 - val/((inputSize/outputSize)*(inputSize/outputSize))) /255*100;
 
             }
         }
         console.log("Output");
         console.log(output);
 
-        console.log(newPixelArray);
-
-        request = jQuery.post('/vdesk_digit_recognize/recognize.php', {request: newPixelArray});
+        request = jQuery.post('/vdesk_digit_recognize/recognize.php', {request: output});
 
         request.done(function (data) {
             jQuery('#response').html(data);
@@ -74,8 +72,7 @@ $( document ).ready(function() {
     });
 
     $("#clear").click(function () {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        jQuery('#response').html('');
+        location.reload();
     });
 
 });
