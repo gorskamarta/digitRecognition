@@ -1,0 +1,16 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+
+parameters:
+    ignoreErrors:
+        - '#Property Phpml\\Clustering\\KMeans\\Cluster\:\:\$points \(iterable\<Phpml\\Clustering\\KMeans\\Point\>\&SplObjectStorage\) does not accept SplObjectStorage#'
+        - '#Phpml\\Dataset\\(.*)Dataset::__construct\(\) does not call parent constructor from Phpml\\Dataset\\ArrayDataset#'
+
+        # wide range cases
+        - '#Parameter \#1 \$coordinates of class Phpml\\Clustering\\KMeans\\Point constructor expects array, array<int>\|Phpml\\Clustering\\KMeans\\Point given#'
+
+        # probably known value
+        - '#Method Phpml\\Classification\\DecisionTree::getBestSplit\(\) should return Phpml\\Classification\\DecisionTree\\DecisionTreeLeaf but returns Phpml\\Classification\\DecisionTree\\DecisionTreeLeaf\|null#'
+        - '#Call to an undefined method Phpml\\Helper\\Optimizer\\Optimizer::getCostValues\(\)#'
