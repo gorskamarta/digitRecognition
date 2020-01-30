@@ -2,8 +2,16 @@
 
 require_once 'si.php';
 
-$request = $_POST['request'];
+$r = $_POST['request'];
+$p = [];
+foreach($r as $value) {
+    $p[] = (float) $value;
+}
 
-$result = $network->predict([$request]);
+$result = $network->predict($p);
 
-print_r($result);
+echo print_r($_POST['request']);
+
+foreach ($result as $label => $value) {
+    echo $label . ': ' . $value . "\r\n";
+}

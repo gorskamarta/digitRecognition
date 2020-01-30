@@ -32,16 +32,17 @@ class MLPClassifier extends MultilayerPerceptron implements Classifier
     {
         $output = $this->setInput($sample)->getOutput();
 
-        $predictedClass = null;
-        $max = 0;
-        foreach ($output as $class => $value) {
-            if ($value > $max) {
-                $predictedClass = $class;
-                $max = $value;
-            }
-        }
-
-        return $predictedClass;
+        return $output;
+//        $predictedClass = null;
+//        $max = 0;
+//        foreach ($output as $class => $value) {
+//            if ($value > $max) {
+//                $predictedClass = $class;
+//                $max = $value;
+//            }
+//        }
+//
+//        return $predictedClass;
     }
 
     /**

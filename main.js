@@ -20,7 +20,7 @@ $( document ).ready(function() {
 
         ctx.beginPath(); // begin
 
-        ctx.lineWidth = 20;
+        ctx.lineWidth = 10;
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#000000';
 
@@ -32,26 +32,44 @@ $( document ).ready(function() {
     }
 
     $( "#send" ).click(function() {
-        pixelArray = ctx.getImageData(0, 0, 280, 280).data;
-        newPixelArray = [];
-        for (row = 0; row < 28; row++) {
-            for (column = 0; column < 28; column++) {
 
-                pixelValue = 0;
-                for (i = row ; i < row+10; i++) {
-                    for (j = column ; j < column+10; j++) {
-                        nr = (i*280)+j;
-                        pixelValue += (pixelArray[nr*4] + pixelArray[(nr*4)+1] + pixelArray[(nr*4)+2]) / 3;
+        // $( "#send" ).attr('disabled', true);
+        pixelArray = ctx.getImageData(0, 0, 280, 280).data;
+
+        console.log(pixelArray);
+
+        newPixelArray = [];
+        for(i = 0; i < pixelArray.length/4; i++) {
+            newPixelArray[i] = pixelArray[i*4]
+        }
+
+        input = newPixelArray;
+        output = [];
+        $inputSize=280;
+        outputSize = 28;
+        for (row = 0 ; row < outputSize; row++) {
+            for ($column = 0 ; $column < outputSize ; column++) {
+
+                val = 0;
+                for (inputRow = row*(inputSize/outputSize) ; inputRow < (row+1)*(inputSize/outputSize) ; inputRow++) {
+                    for (inputColumn = column*(inputSize/outputSize) ; inputColumn < (column+1)*(inputSize/outputSize); inputColumn++) {
+                        val += input[inputColumn+(inputRow*inputSize)];
                     }
                 }
-                newPixelArray[(row*28)+column] = pixelValue/100;
+                output[] = val/((inputSize/outputSize)*(inputSize/outputSize));
+
             }
         }
+        console.log("Output");
+        console.log(output);
+
+        console.log(newPixelArray);
 
         request = jQuery.post('/vdesk_digit_recognize/recognize.php', {request: newPixelArray});
 
         request.done(function (data) {
             jQuery('#response').html(data);
+            // $( "#send" ).attr('disabled', false);
         });
     });
 
