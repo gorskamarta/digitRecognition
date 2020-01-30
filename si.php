@@ -56,7 +56,7 @@ if (is_array($weights)) {
     echo "Skipping... No initial weights filie found!\r\n";
 }
 
-
+/// THE END
 
 
 // Load data "Loading training data...\r\n";
@@ -107,3 +107,5 @@ for ($i = $lastBatch ; $i < count($samplesBatches); ++$i) {
 
 }
 echo "Network trained!\r\n";
+
+
